@@ -26,5 +26,10 @@ class InstaBot:
             .click()
         sleep(2)
 
+    def follow(self):
+        self.driver.find_element_by_xpath('//*[@id="react-root"]/section/nav/div[2]/div/div/div[2]/input')\
+            .send_keys('music')
+        sleep(2)
+
 # Intances
-InstaBot(username, password)
+my_bot = InstaBot(username, password)
