@@ -18,4 +18,4 @@ virtualenv -p python3 venv
 pip install selenium
 
 ## Run Python Script
-python -i name_of_script.py
+python -i main.py
