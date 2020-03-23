@@ -19,9 +19,9 @@ class BotController extends AbstractController
     }
 
     /**
-     * @Route("/bot-login", name="bot_login")
+     * @Route("/mybot", name="mybot")
      */
-    public function botLogin(Request $request, ParameterBagInterface $parameterBagInterface)
+    public function mybot(Request $request, ParameterBagInterface $parameterBagInterface)
     {
         // Execute Chrome client
         $client = Client::createChromeClient();
@@ -32,7 +32,7 @@ class BotController extends AbstractController
         // Define username and password
         $form['username'] = $parameterBagInterface->get('app-instagram-username');
         $form['password'] = $parameterBagInterface->get('app-instagram-password');
-
+        
         // Wait for the input form element to load
         $client->waitFor("//input[@name=\"username\"]");
 
@@ -42,9 +42,18 @@ class BotController extends AbstractController
             'password' => $form['password'],
         ]);
 
-        // Wait for the notification pop-up
-        sleep(4);
+        // Wait for search bar to load on Instagram home page
+        $client->waitFor("//input[@placeholder=\"Rechercher\"]");
+        
+        // Get search bar
+        $crawler = $client->getCrawler();
+        $searchbar = $crawler->filter("//input[@placeholder=\"Rechercher\"]");
 
+        // Search hashtags
+        $searchbar->sendKeys('#music');
+        $client->waitFor('//*[@id="react-root"]/section/nav/div[2]/div/div/div[2]/div[2]/div[2]');
+
+        // Take screenshot
         $client->takeScreenshot('screen.png');
     }
 }
