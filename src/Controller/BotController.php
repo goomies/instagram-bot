@@ -56,7 +56,7 @@ class BotController extends AbstractController
         // Open Hashtag page
         $music = $crawler->filterXPath("//span[contains(text(), '#music')]");
         $music->click();
-        $client->waitFor("//h1[contains(text(), 'music')]");
+        $client->waitFor('//*[@id="react-root"]/section/main/header/div[2]/div[1]/div[1]/h1');
 
         // Take screenshot
         $client->takeScreenshot('screen.png');
