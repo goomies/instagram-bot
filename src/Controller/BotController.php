@@ -47,11 +47,16 @@ class BotController extends AbstractController
         
         // Get search bar
         $crawler = $client->getCrawler();
-        $searchbar = $crawler->filter("//input[@placeholder=\"Rechercher\"]");
+        $searchbar = $crawler->filterXPath("//input[@placeholder=\"Rechercher\"]");
 
-        // Search hashtags
+        // Search Hashtag
         $searchbar->sendKeys('#music');
         $client->waitFor('//*[@id="react-root"]/section/nav/div[2]/div/div/div[2]/div[2]/div[2]');
+
+        // Open Hashtag page
+        $music = $crawler->filterXPath("//span[contains(text(), '#music')]");
+        $music->click();
+        $client->waitFor("//h1[contains(text(), 'music')]");
 
         // Take screenshot
         $client->takeScreenshot('screen.png');
