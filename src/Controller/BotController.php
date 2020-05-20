@@ -83,9 +83,12 @@ class BotController extends AbstractController
             die;
         }
 
-        // Contact profile
-        // $contactProfile = $crawler->filterXPath("//button[contains(text(), 'Contacter')]");
-        // $contactProfile->click();
+        // Wait for the contact button to load
+        $client->waitFor("//button[contains(text(), 'Contacter')]");
+
+        // Click contact button
+        $contactProfile = $crawler->filterXPath("//button[contains(text(), 'Contacter')]");
+        $contactProfile->click();
 
         sleep(4);
 
